@@ -25,6 +25,9 @@ interface NotificationInfoDAO {
     @Query("DELETE FROM NotificationInfo WHERE Id = :id")
     fun deleteByID(id : Int)
 
+    @Query("DELETE FROM NotificationInfo")
+    fun deleteAll()
+
     @Query("SELECT * FROM NotificationInfo")
     fun getAll(): List<NotificationInfo>
 

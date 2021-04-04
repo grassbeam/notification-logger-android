@@ -40,7 +40,7 @@ abstract class NotificationLogDatabase : RoomDatabase() {
                     NotificationLogDatabase::class.java,
                     "word_database"
                 )
-                    .addCallback(NotificationLogCallback(scope))
+//                    .addCallback(NotificationLogTestCallback(scope))
                     .build()
                 INSTANCE = instance
                 // return instance
@@ -50,7 +50,7 @@ abstract class NotificationLogDatabase : RoomDatabase() {
     }
 
 
-    private class NotificationLogCallback(
+    private class NotificationLogTestCallback(
         private val scope: CoroutineScope
     ) : RoomDatabase.Callback() {
 
@@ -65,7 +65,7 @@ abstract class NotificationLogDatabase : RoomDatabase() {
                     iconDao.insertAll(icon1)
 
                     for (i in 1..5) {
-                        val infoItem = NotificationInfo(0, "net.leopisang.tester"
+                        val infoItem = NotificationInfo(0, "net.leopisang.tester", "PisanGG Tester"
                             , "Notif $i", "Test message notification number $i", 1617390602607 + (i*100))
                         infoDao.insertAll(infoItem)
                     }

@@ -20,6 +20,9 @@ data class NotificationInfo(
     @ColumnInfo(name = "PackageName")
     val packageName: String?,
 
+    @ColumnInfo(name = "AppName")
+    val appName: String?,
+
     @ColumnInfo(name = "Title")
     val notifTitle: String?,
 

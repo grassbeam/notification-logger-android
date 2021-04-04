@@ -3,6 +3,7 @@ package net.leopisang.notificationlog.service
 import android.app.Notification
 import android.content.Context
 import android.content.Intent
+import android.content.pm.PackageManager
 import android.graphics.Bitmap
 import android.graphics.drawable.Drawable
 import android.os.IBinder
@@ -48,12 +49,30 @@ class NotificationCaptorService : NotificationListenerService() {
             if (notif.tickerText != null) {
                 ticker = notif.tickerText.toString()
             }
+
+            var appName: String? = null
+
+            val packageManager = applicationContext.packageManager
+
+            try {
+                val ai = packageManager.getApplicationInfo(pack, 0)
+                appName =  packageManager.getApplicationLabel(ai) as String?
+
+            } catch (e: PackageManager.NameNotFoundException) {
+                // Do nothing...
+            }
+
             val extras = notif.extras
             val title = extras.getString("android.title")
             val text = extras.getCharSequence("android.text").toString()
             val smallIcon = extras.getInt(Notification.EXTRA_SMALL_ICON)
-            val bigIcon = extras[Notification.EXTRA_LARGE_ICON] as Bitmap?
+            var bigIcon = extras[Notification.EXTRA_LARGE_ICON] as Bitmap?
+            if (bigIcon == null) {
+                val icon = notif.getLargeIcon()
+                val s =""
+            }
 
+            val asd1 = notif.badgeIconType
 
             val stream = ByteArrayOutputStream()
             var byteArray: ByteArray? = null
@@ -62,7 +81,7 @@ class NotificationCaptorService : NotificationListenerService() {
                 byteArray = stream.toByteArray()
             }
 
-            val notifInfo = NotificationInfo(0, pack, title, text, Date().time)
+            val notifInfo = NotificationInfo(0, pack, appName, title, text,  Date().time)
             val notifIcon = NotificationIcon(pack, byteArray)
 
             repository.insertWithIcon(notifInfo, notifIcon)

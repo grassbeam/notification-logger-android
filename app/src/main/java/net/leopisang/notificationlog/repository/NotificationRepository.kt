@@ -29,5 +29,8 @@ class NotificationRepository (private val notifInfoDao: NotificationInfoDAO, pri
         notifInfoDao.insert(notifInfo)
     }
 
+    suspend fun clearNotifInfo() {
+        notifInfoDao.deleteAll()
+    }
 
 }

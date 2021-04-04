@@ -1,9 +1,8 @@
 package net.leopisang.notificationlog.ui.home
 
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.ViewModel
-import androidx.lifecycle.ViewModelProvider
+import androidx.lifecycle.*
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
 import net.leopisang.notificationlog.data.dbo.NotificationInfoIcon
 import net.leopisang.notificationlog.repository.NotificationRepository
 
@@ -14,7 +13,19 @@ class HomeViewModel(private val repository: NotificationRepository) : ViewModel(
     }
     val textPageHeader: LiveData<String> = _text
 
+    val isShowLoader = MutableLiveData<Boolean>().apply {
+        value = false
+    }
+
     val allNotificationDataWithIcon : LiveData<List<NotificationInfoIcon>> = repository.allNotifDataWithIconLive
+
+    fun clearAllNotificationWithoutIcon() {
+        isShowLoader.value = true
+        viewModelScope.launch(Dispatchers.IO) {
+            repository.clearNotifInfo()
+            isShowLoader.postValue(false)
+        }
+    }
 
 }
 

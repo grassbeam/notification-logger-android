@@ -2,9 +2,8 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto">
     <item
-        android:id="@+id/action_settings"
+        android:id="@+id/action_clear_notif"
         android:orderInCategory="100"
-        android:title="@string/action_settings"
+        android:title="@string/action_clear_notif"
         app:showAsAction="never" />
-    <item android:title="@string/action_clear_notif" />
 </menu>

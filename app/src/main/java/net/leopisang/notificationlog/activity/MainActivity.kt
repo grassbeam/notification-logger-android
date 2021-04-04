@@ -5,6 +5,7 @@ import android.content.Intent
 import android.os.Bundle
 import android.provider.Settings
 import android.view.Menu
+import android.view.MenuItem
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.Toolbar
 import androidx.drawerlayout.widget.DrawerLayout
@@ -16,7 +17,10 @@ import androidx.navigation.ui.navigateUp
 import androidx.navigation.ui.setupActionBarWithNavController
 import androidx.navigation.ui.setupWithNavController
 import com.google.android.material.navigation.NavigationView
+import kotlinx.coroutines.GlobalScope
+import net.leopisang.notificationlog.NotificationLogApplication
 import net.leopisang.notificationlog.R
+import net.leopisang.notificationlog.repository.NotificationRepository
 import net.leopisang.notificationlog.service.NotificationCaptorService
 
 
@@ -59,7 +63,7 @@ class MainActivity : AppCompatActivity() {
         return navController.navigateUp(appBarConfiguration) || super.onSupportNavigateUp()
     }
 
-    fun getNotificationListenerPermission() {
+    private fun getNotificationListenerPermission() {
 
         val cn = ComponentName(applicationContext, NotificationCaptorService::class.java)
         val flat: String = Settings.Secure.getString(
